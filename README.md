@@ -21,6 +21,7 @@ mathematica-sonarqube-test-project/
 ├── Tests/                        # Unit tests
 │   ├── CalculatorTests.wl        # Tests for Calculator module
 │   └── StringUtilsTests.wl       # Tests for StringUtils module
+├── CoverageUtils.wl              # Reusable coverage export utility
 ├── RunTests.wl                   # Test runner with coverage tracking
 ├── Makefile                      # Build automation
 ├── sonar-project.properties      # SonarQube configuration
@@ -142,12 +143,49 @@ The project uses Mathematica's native test framework:
 3. **Coverage data** is generated in native Wolfram format
 4. **Coverage files** are exported to `./coverage/`:
    - `coverage-raw.wl` - Native Wolfram format
-   - `coverage.json` - JSON format
+   - `coverage.json` - JSON format (for SonarQube plugin)
    - `test-results.json` - Test execution results
 
-### Future: Coverage Conversion
+### CoverageUtils.wl - Reusable Coverage Utility
 
-To display coverage in SonarQube, you'll need to convert the native Wolfram coverage format to lcov or Cobertura XML. This converter will be implemented in a future update.
+This project includes `CoverageUtils.wl`, a reusable package for exporting Mathematica coverage data to JSON format compatible with the SonarQube Mathematica plugin.
+
+**Features:**
+- Converts nested Wolfram Association structures to clean JSON
+- Validates coverage data structure before export
+- Includes line-by-line hit counts and coverage percentages
+- Handles large datasets efficiently (removes source code from line data)
+
+**Usage in your own projects:**
+
+```mathematica
+(* Load the utility *)
+Get["CoverageUtils.wl"]
+
+(* Export your coverage data *)
+CoverageUtils`ExportCoverageJSON[coverageData, "coverage/coverage.json"]
+```
+
+**Required data structure:**
+```mathematica
+coverageData = <|
+  "/path/to/file.wl" -> <|
+    "FileName" -> "MyModule",
+    "FullPath" -> "/path/to/file.wl",
+    "TotalLines" -> 100,
+    "CodeLines" -> 75,
+    "CoveredLines" -> 50,
+    "Coverage" -> 0.667,
+    "LineCoverage" -> <|
+      1 -> <|"Line"->1, "IsCode"->True, "Hits"->5|>,
+      2 -> <|"Line"->2, "IsCode"->False, "Hits"->0|>,
+      (* ... *)
+    |>
+  |>
+|>
+```
+
+The utility is licensed under **GPLv3** and can be freely used in your Mathematica projects. See `CoverageUtils.wl` for complete documentation and examples.
 
 ## SonarQube Configuration
 
