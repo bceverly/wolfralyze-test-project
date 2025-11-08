@@ -1,0 +1,31 @@
+# Test coverage output
+coverage/
+*.coverage
+
+# Test results
+test-results/
+*.test
+
+# SonarQube scanner working directory
+.scannerwork/
+
+# Wolfram Language generated files
+*.mx
+*.wdx
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
