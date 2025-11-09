@@ -185,7 +185,7 @@ coverageData = <|
 |>
 ```
 
-The utility is licensed under **GPLv3** and can be freely used in your Mathematica projects. See `CoverageUtils.wl` for complete documentation and examples.
+The utility is licensed under **AGPLv3** and can be freely used in your Mathematica projects. See `CoverageUtils.wl` for complete documentation and examples.
 
 ## SonarQube Configuration
 
